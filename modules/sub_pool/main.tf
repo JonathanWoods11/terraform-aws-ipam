@@ -20,11 +20,21 @@ resource "aws_vpc_ipam_pool" "sub" {
   tags = var.pool_config.tags
 }
 
+data "aws_vpc_ipam_preview_next_cidr" "sub" {
+  count = var.pool_config.netmask_length == null ? 0 : 1
+
+  ipam_pool_id     = var.source_ipam_pool_id
+  disallowed_cidrs = try(var.pool_config.disallowed_cidrs, null)
+  netmask_length   = var.pool_config.netmask_length
+}
+
 resource "aws_vpc_ipam_pool_cidr" "sub" {
-  for_each = toset(var.pool_config.cidr)
+
+  for_each = var.pool_config.cidr == null ? toset([tostring(var.pool_config.netmask_length)]) : toset(var.pool_config.cidr)
 
   ipam_pool_id = aws_vpc_ipam_pool.sub.id
-  cidr         = each.key
+  cidr         = var.pool_config.cidr == null ? data.aws_vpc_ipam_preview_next_cidr.sub[0].cidr : each.key
+  #
 
   dynamic "cidr_authorization_context" {
     for_each = var.pool_config.cidr_authorization_context == null ? {} : var.pool_config.cidr_authorization_context
@@ -32,6 +42,10 @@ resource "aws_vpc_ipam_pool_cidr" "sub" {
       message   = cidr_authorization_context.message
       signature = cidr_authorization_context.signature
     }
+  }
+
+  lifecycle {
+    ignore_changes = [cidr]
   }
 }
 

@@ -1,6 +1,7 @@
 variable "pool_config" {
+  description = "Pool Configuration."
   type = object({
-    cidr                 = list(string)
+    cidr                 = optional(list(string))
     ram_share_principals = optional(list(string))
 
     locale                            = optional(string)
@@ -11,6 +12,8 @@ variable "pool_config" {
     aws_service                       = optional(string)
     description                       = optional(string)
     publicly_advertisable             = optional(bool)
+    netmask_length                    = optional(number)
+    disallowed_cidrs                  = optional(list(string))
 
     allocation_resource_tags   = optional(map(string))
     tags                       = optional(map(string))

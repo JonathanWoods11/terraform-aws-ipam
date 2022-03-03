@@ -12,7 +12,7 @@ The example code shows you how to deploy IPAM with pools in 2 regions. The compa
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.73.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.2.0 |
 
 ## Providers
 
@@ -23,6 +23,9 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_basic"></a> [basic](#module\_basic) | ../.. | n/a |
+| <a name="module_subnets_level_1"></a> [subnets\_level\_1](#module\_subnets\_level\_1) | drewmullen/subnets/cidr | 1.0.0 |
+| <a name="module_subnets_level_2_east_1"></a> [subnets\_level\_2\_east\_1](#module\_subnets\_level\_2\_east\_1) | drewmullen/subnets/cidr | 1.0.0 |
+| <a name="module_subnets_level_3_team_b_east_1"></a> [subnets\_level\_3\_team\_b\_east\_1](#module\_subnets\_level\_3\_team\_b\_east\_1) | drewmullen/subnets/cidr | 1.0.0 |
 
 ## Resources
 
@@ -39,5 +42,8 @@ No resources.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_base_cidrs"></a> [base\_cidrs](#output\_base\_cidrs) | n/a |
+| <a name="output_l3_cidrs"></a> [l3\_cidrs](#output\_l3\_cidrs) | n/a |
 <!-- END_TF_DOCS -->
